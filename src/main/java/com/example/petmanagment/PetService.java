@@ -18,7 +18,7 @@ public class PetService {
 
     public Pet findPet(int id) {
         Optional<Pet> pet = petMapper.findById(id);
-        Pet Pet =pet.orElseThrow(() -> new PetNotFoundException("That ID:" + id + " not registered."));
+        Pet Pet = pet.<PetNotFoundException>orElseThrow(() -> new PetNotFoundException("That ID:" + id + " not registered."));
         return Pet;
     }
 
