@@ -1,8 +1,12 @@
 package com.example.petmanagment;
 
+
+import lombok.Getter;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Getter
 public class Pet {
     private Integer id;
     private String animalSpecies;
@@ -18,7 +22,6 @@ public class Pet {
         this.weight = weight;
     }
 
-    //idは自動採番の為NULLにしている
     public Pet(String animalSpecies, String name, LocalDate birthday, BigDecimal weight) {
         this.id = null;
         this.animalSpecies = animalSpecies;
@@ -26,24 +29,6 @@ public class Pet {
         this.birthday = birthday;
         this.weight = weight;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getAnimalSpecies() {
-        return animalSpecies;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public LocalDate getBirthday() {
-        return birthday;
-    }
-
-    public BigDecimal getWeight() {
-        return weight;
-    }
 }
+
+
