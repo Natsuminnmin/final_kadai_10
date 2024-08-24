@@ -23,7 +23,18 @@
 ![kadai10-POST_Body](https://github.com/user-attachments/assets/98ca3634-a702-47aa-9347-80b8a3082e52)
 ![kadai10-POST_Header](https://github.com/user-attachments/assets/d1569b64-d727-4435-9faf-04877a08e312)
 
+また、クエストボディに不備があった際（空欄や空文字など）にValidationを利用し、エラーコード400で返す実装を行いました。
 
+例：すべての項目をNULLで登録した場合
+![kadai10-validation](https://github.com/user-attachments/assets/930c0b15-6b8e-4836-9179-f543c77c8506)
+![kadai10-validation-2](https://github.com/user-attachments/assets/a47a49cf-c06e-4135-b498-3b9fb7f11276)
+上記のように、エラーメッセージが表示され、レスポンスボディに登録されたURLの表示もありません。
+
+また、動物種/名前は50字以内、誕生日は過去か現在の日付、体重は整数3桁、小数点以下は2桁で登録しなければエラーになるようにもしました。
+例：動物種/名前：50文字以上、誕生日：未来日、体重：整数4桁、小数点以下3桁で登録した場合
+![kadai10-validation-3](https://github.com/user-attachments/assets/2cc0aab9-8142-4314-b083-7aa146028bb1)
+![kadai10-validation-4](https://github.com/user-attachments/assets/de708f0f-ab46-41ad-a91d-71cf00577f39)
+こちらも同様にエラーメッセージが表示され、レスポンスボディに登録されたURLの表示はありません。
 
 ## 次回の実装について
-・POSTでリクエストボディに不備があった際にエラーコード404で、エラーメッセージも設定されたのが表示されるように実装を進めること
+UPDATEの実装を進めます
