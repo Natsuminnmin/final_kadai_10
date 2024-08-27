@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
-public class PetPostRequest {
+public class PetRequest {
 
     @NotBlank
     @Size(max = 50)

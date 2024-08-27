@@ -22,11 +22,12 @@ public class PetController {
     }
 
     @PostMapping("/pets")
-    public ResponseEntity<PetResponse> insert(@RequestBody @Validated PetPostRequest petPostRequest, UriComponentsBuilder uriBuilder){
-        Pet pet = petService.insert(petPostRequest.getAnimalSpecies(), petPostRequest.getName(), petPostRequest.getBirthday(), petPostRequest.getWeight());
+    public ResponseEntity<PetResponse> insert(@RequestBody @Validated PetRequest petRequest, UriComponentsBuilder uriBuilder){
+        Pet pet = petService.insert(petRequest.getAnimalSpecies(), petRequest.getName(), petRequest.getBirthday(), petRequest.getWeight());
         URI location = uriBuilder.path("/pets/{id}").buildAndExpand(pet.getId()).toUri();
-        PetResponse body = new PetResponse(petPostRequest.getName() + "-chan's registration has been completed!");
+        PetResponse body = new PetResponse(petRequest.getName() + "-chan's registration has been completed!");
         return ResponseEntity.created(location).body(body);
     }
+
 }
 
