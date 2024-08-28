@@ -2,7 +2,6 @@ package com.example.petmanagment;
 
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -23,7 +22,7 @@ public class PetService {
     }
 
 
-    public Pet insert(String animalSpecies, String name, LocalDate birthday, BigDecimal weight){
+    public Pet insert(String animalSpecies, String name, LocalDate birthday, Double weight){
         Pet pet = new Pet(animalSpecies, name, birthday, weight);
         petMapper.insert(pet);
         return pet;

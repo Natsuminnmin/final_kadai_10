@@ -1,6 +1,7 @@
 package com.example.petmanagment;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -21,11 +22,12 @@ public class PetController {
     }
 
     @PostMapping("/pets")
-    public ResponseEntity<PetResponse> insert(@RequestBody PetRequest petRequest, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<PetResponse> insert(@RequestBody @Validated PetRequest petRequest, UriComponentsBuilder uriBuilder){
         Pet pet = petService.insert(petRequest.getAnimalSpecies(), petRequest.getName(), petRequest.getBirthday(), petRequest.getWeight());
         URI location = uriBuilder.path("/pets/{id}").buildAndExpand(pet.getId()).toUri();
         PetResponse body = new PetResponse(petRequest.getName() + "-chan's registration has been completed!");
         return ResponseEntity.created(location).body(body);
     }
+
 }
 

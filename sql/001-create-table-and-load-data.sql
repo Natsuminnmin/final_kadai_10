@@ -5,7 +5,7 @@ CREATE TABLE pets (
   animal_species VARCHAR(50) NOT NULL,
   name VARCHAR(50) NOT NULL,
   birthday DATE NOT NULL,
-  weight DECIMAL(5, 2) NOT NULL,
+  weight DOUBLE(3, 2) NOT NULL,
   PRIMARY KEY(id)
 );
 
