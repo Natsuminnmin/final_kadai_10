@@ -10,7 +10,7 @@ import java.util.Optional;
 public class PetService {
 
     private final PetMapper petMapper;
-    
+
 
     public PetService(PetMapper petMapper) {
 
@@ -29,7 +29,6 @@ public class PetService {
         petMapper.insert(pet);
         return pet;
     }
-
 
 
     public Pet findById(int id) {

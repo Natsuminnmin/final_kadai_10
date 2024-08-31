@@ -18,13 +18,12 @@ public class PetController {
     }
 
     @GetMapping("/pets/{id}")
-    public Pet findPet(@PathVariable("id")int id) //idを使ってデータベースから情報を取得
-    {
+    public Pet findPet(@PathVariable("id") int id) { //idを使ってデータベースから情報を取得
         return petService.findPet(id);
     }
 
     @PostMapping("/pets")
-    public ResponseEntity<PetResponse> insert(@RequestBody @Validated PetRequest petRequest, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<PetResponse> insert(@RequestBody @Validated PetRequest petRequest, UriComponentsBuilder uriBuilder) {
         Pet pet = petService.insert(petRequest.getAnimalSpecies(), petRequest.getName(), petRequest.getBirthday(), petRequest.getWeight());
         URI location = uriBuilder.path("/pets/{id}").buildAndExpand(pet.getId()).toUri();
         PetResponse body = new PetResponse(petRequest.getName() + "ちゃんの登録が完了しました");

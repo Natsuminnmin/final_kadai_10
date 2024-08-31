@@ -38,8 +38,7 @@ public class Pet {
         this.weight = weight;
     }
 
-    public void setOldWeight(BigDecimal oldWeight)
-    {
+    public void setOldWeight(BigDecimal oldWeight) {
         this.oldWeight = oldWeight;
     }
 }
