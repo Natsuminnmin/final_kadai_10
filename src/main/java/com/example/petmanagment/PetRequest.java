@@ -6,6 +6,7 @@ import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
@@ -27,7 +28,7 @@ public class PetRequest {
     @NotNull
     @Positive
     @Digits(integer = 3, fraction = 2)
-    private Double weight;
+    private BigDecimal weight;
 
 }
 

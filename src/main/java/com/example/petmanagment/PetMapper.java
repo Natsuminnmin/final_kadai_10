@@ -1,11 +1,7 @@
 package com.example.petmanagment;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @Mapper
@@ -16,5 +12,8 @@ public interface PetMapper {
 
     @Insert("INSERT INTO pets (animal_species, name, birthday, weight) VALUES (#{animalSpecies}, #{name}, #{birthday}, #{weight})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    void insert (Pet pet);
+    void insert(Pet pet);
+
+    @Update("UPDATE pets SET weight = #{weight} WHERE id = #{id}")
+    void update(Pet pet);
 }
