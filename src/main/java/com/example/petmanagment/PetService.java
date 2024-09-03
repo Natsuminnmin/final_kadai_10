@@ -44,5 +44,12 @@ public class PetService {
         existingPet.setOldWeight(oldWeight); // 前の体重をセット
         return existingPet;
     }
+
+    public Pet delete(int id) {
+        Optional<Pet> pet = petMapper.findById(id);
+        Pet Pet = pet.orElseThrow(() -> new PetNotFoundException("入力されたIDの登録はありません。"));
+        petMapper.delete(id);
+        return Pet;
+    }
 }
 

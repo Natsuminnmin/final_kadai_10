@@ -16,4 +16,7 @@ public interface PetMapper {
 
     @Update("UPDATE pets SET weight = #{weight} WHERE id = #{id}")
     void update(Pet pet);
+
+    @Delete("DELETE FROM pets WHERE id = #{id}")
+    void delete(int id);
 }
