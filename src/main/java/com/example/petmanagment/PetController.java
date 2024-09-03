@@ -38,5 +38,12 @@ public class PetController {
         PetResponse body = new PetResponse(responseMessage);
         return ResponseEntity.ok(body);
     }
+
+    @DeleteMapping("/pets/{id}")
+    public ResponseEntity<PetResponse> delete(@PathVariable("id") int id) {
+        Pet deletePet = petService.delete(id);
+        PetResponse body = new PetResponse(deletePet.getName() + "ちゃんの登録を削除しました");
+        return ResponseEntity.ok(body);
+    }
 }
 
