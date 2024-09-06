@@ -5,6 +5,7 @@ import lombok.Getter;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 
 @Getter
@@ -41,7 +42,30 @@ public class Pet {
     public void setOldWeight(BigDecimal oldWeight) {
         this.oldWeight = oldWeight;
     }
-    
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Pet pet)) return false;
+        return Objects.equals(getId(), pet.getId()) && Objects.equals(getAnimalSpecies(), pet.getAnimalSpecies()) && Objects.equals(getName(), pet.getName()) && Objects.equals(getBirthday(), pet.getBirthday()) && Objects.equals(getWeight(), pet.getWeight());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getAnimalSpecies(), getName(), getBirthday(), getWeight());
+    }
+
+    @Override
+    public String toString() {
+        return "Pet{" +
+                "id=" + id +
+                ", animalSpecies='" + animalSpecies + '\'' +
+                ", name='" + name + '\'' +
+                ", birthday=" + birthday +
+                ", weight=" + weight +
+                ", oldWeight=" + oldWeight +
+                '}';
+    }
 }
 
 
