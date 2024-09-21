@@ -31,7 +31,7 @@ class PetControllerTest {
 
 
     @Test
-    void 指定したIDに紐づいている情報を取得できること() throws Exception {
+    void 指定したIDに紐づいている情報を1件取得できること() throws Exception {
         doReturn(new Pet(1, "dog", "ポチ", LocalDate.of(2020, 1, 1), new BigDecimal("10.23"))).when(petService).findPet(1);
         mockMvc.perform(get("/pets/{id}", 1))
                 .andExpect(status().isOk())
@@ -49,7 +49,7 @@ class PetControllerTest {
     }
 
     @Test
-    void 指定したIDの登録が無い場合は例外スローされること() throws Exception {
+    void 指定したIDの登録が無い場合はエラーメッセージと404のエラーが返されること() throws Exception {
         doThrow(new PetNotFoundException("入力されたIDの登録はありません。")).when(petService).findPet(100);
         mockMvc.perform(get("/pets/{id}", 100))
                 .andExpect(status().isNotFound())
@@ -106,8 +106,6 @@ class PetControllerTest {
                                 }
                                 """
                 ));
-
-
     }
 
     @Test
@@ -145,7 +143,7 @@ class PetControllerTest {
 
 
     @Test
-    void 指定したIDでIDに紐づいている情報の体重を更新することが出来ること() throws Exception {
+    void 指定したIDに紐づいているペットの体重を更新することが出来ること() throws Exception {
         Pet updatedPet = new Pet(3, "cat", "リン", LocalDate.of(2017, 9, 10), new BigDecimal("9.45"));
         updatedPet.setOldWeight(new BigDecimal("8.94"));
         doReturn(updatedPet).when(petService).update(3, new BigDecimal("9.45"));
@@ -189,7 +187,7 @@ class PetControllerTest {
     }
 
     @Test
-    void 指定したIDの情報を削除出来ること() throws Exception {
+    void 指定したIDのペットを1件削除出来ること() throws Exception {
         doReturn(new Pet(1, "dog", "ポチ", LocalDate.of(2020, 1, 1), new BigDecimal("10.23"))).when(petService).delete(1);
         mockMvc.perform(delete("/pets/{id}", 1))
                 .andExpect(status().isOk())
@@ -203,7 +201,7 @@ class PetControllerTest {
     }
 
     @Test
-    void 削除したいIDの登録が無い場合は例外スローされること() throws Exception {
+    void 削除したいIDの登録が無い場合はエラーメッセージと404のエラーが返されること() throws Exception {
         doThrow(new PetNotFoundException("入力されたIDの登録はありません。")).when(petService).delete(1);
         mockMvc.perform(delete("/pets/{id}", 1))
                 .andExpect(status().isNotFound())
@@ -215,11 +213,7 @@ class PetControllerTest {
                                 """
                 ));
         verify(petService, times(1)).delete(1);
-
-
     }
-
-
 }
 
 
