@@ -36,7 +36,7 @@ class PetServiceTest {
             verify(petMapper, times(1)).findById(1);
         }
 
-        
+
         @Test
         public void 指定したIDの登録がない時にエラーメッセージが表示されること() {
             doReturn(Optional.empty()).when(petMapper).findById(100);
