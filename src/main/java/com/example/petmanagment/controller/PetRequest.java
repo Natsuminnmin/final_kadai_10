@@ -1,4 +1,4 @@
-package com.example.petmanagment;
+package com.example.petmanagment.controller;
 
 //登録時に使用するリクエストパラメータ
 
@@ -13,12 +13,12 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class PetRequest {
 
-    @NotBlank(message = "空白は許可されていません、動物種を入力してください。")
-    @Size(max = 50, message = "50文字以内で記入してください。")
+    @NotBlank(message = "動物種を入力してください。")
+    @Size(max = 20, message = "20文字以内で記入してください。")
     private String animalSpecies;
 
-    @NotBlank(message = "空白は許可されていません、名前を入力してください。")
-    @Size(max = 50, message = "50文字以内で記入してください。")
+    @NotBlank(message = "名前を入力してください。")
+    @Size(max = 20, message = "20文字以内で記入してください。")
     private String name;
 
     @NotNull(message = "誕生日を入力していださい。")
@@ -37,5 +37,3 @@ public class PetRequest {
         this.weight = weight;
     }
 }
-
-

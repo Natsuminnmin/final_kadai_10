@@ -1,4 +1,4 @@
-package com.example.petmanagment;
+package com.example.petmanagment.controller;
 
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;

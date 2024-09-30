@@ -1,4 +1,4 @@
-package com.example.petmanagment;
+package com.example.petmanagment.controller;
 
 public class PetResponse {
 

@@ -1,6 +1,8 @@
-package com.example.petmanagment;
+package com.example.petmanagment.mappertest;
 
 
+import com.example.petmanagment.entity.Pet;
+import com.example.petmanagment.mapper.PetMapper;
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.core.api.dataset.ExpectedDataSet;
 import com.github.database.rider.spring.api.DBRider;
@@ -93,4 +95,3 @@ class PetMapperTest {
         }
     }
 }
-
