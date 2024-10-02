@@ -1,4 +1,4 @@
-package com.example.petmanagment;
+package com.example.petmanagment.entity;
 
 import lombok.Getter;
 
@@ -70,5 +70,3 @@ public class Pet {
     }
 
 }
-
-

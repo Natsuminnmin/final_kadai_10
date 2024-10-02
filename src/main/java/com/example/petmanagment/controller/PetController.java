@@ -1,5 +1,7 @@
-package com.example.petmanagment;
+package com.example.petmanagment.controller;
 
+import com.example.petmanagment.entity.Pet;
+import com.example.petmanagment.service.PetService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -46,4 +48,3 @@ public class PetController {
         return ResponseEntity.ok(body);
     }
 }
-

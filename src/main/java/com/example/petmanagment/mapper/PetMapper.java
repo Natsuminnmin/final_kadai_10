@@ -1,5 +1,6 @@
-package com.example.petmanagment;
+package com.example.petmanagment.mapper;
 
+import com.example.petmanagment.entity.Pet;
 import org.apache.ibatis.annotations.*;
 
 import java.util.Optional;

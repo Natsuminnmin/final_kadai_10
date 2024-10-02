@@ -1,5 +1,8 @@
-package com.example.petmanagment;
+package com.example.petmanagment.service;
 
+import com.example.petmanagment.controller.exception.PetNotFoundException;
+import com.example.petmanagment.entity.Pet;
+import com.example.petmanagment.mapper.PetMapper;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -52,4 +55,3 @@ public class PetService {
         return Pet;
     }
 }
-
