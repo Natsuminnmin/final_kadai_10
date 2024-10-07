@@ -12,9 +12,9 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class PetUpdateWeightRequest {
 
-    @NotNull(message = "体重を入力していださい。")
+    @NotNull(message = "体重を入力してください。")
     @Positive(message = "正の数値で入力してださい。")
-    @Digits(integer = 3, fraction = 2, message = "有効な数値の範囲外です。整数3桁、小数点以下2桁以内の範囲で入力して下さい。")
+    @Digits(integer = 3, fraction = 2, message = "有効な数値の範囲外です。整数3桁、小数点以下2桁以内の範囲で入力してください。")
     private BigDecimal weight;
 
     public PetUpdateWeightRequest(BigDecimal weight) {

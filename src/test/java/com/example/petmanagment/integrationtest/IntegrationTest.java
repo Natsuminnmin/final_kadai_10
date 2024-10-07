@@ -124,11 +124,11 @@ class IntegrationTest {
                                      "errors": [
                                          {
                                              "field": "birthday",
-                                             "message": "誕生日を入力していださい。"
+                                             "message": "誕生日を入力してください。"
                                          },
                                          {
                                              "field": "weight",
-                                             "message": "体重を入力していださい。"
+                                             "message": "体重を入力してください。"
                                          },
                                          {
                                              "field": "animalSpecies",
@@ -162,11 +162,11 @@ class IntegrationTest {
                                          },
                                          {
                                              "field": "weight",
-                                             "message": "正の数値で入力してださい。"
+                                             "message": "正の数値で入力してください。"
                                          },
                                          {
                                              "field": "weight",
-                                             "message": "有効な数値の範囲外です。整数3桁、小数点以下2桁以内の範囲で入力して下さい。"
+                                             "message": "有効な数値の範囲外です。整数3桁、小数点以下2桁以内の範囲で入力してください。"
                                          },
                                          {
                                              "field": "animalSpecies",
@@ -224,7 +224,7 @@ class IntegrationTest {
                                         "errors": [
                                             {
                                                 "field": "weight",
-                                                "message": "体重を入力していださい。"
+                                                "message": "体重を入力してください。"
                                             }
                                         ]
                                     }
@@ -247,11 +247,11 @@ class IntegrationTest {
                                         "errors": [
                                             {
                                                 "field": "weight",
-                                                "message": "正の数値で入力してださい。"
+                                                "message": "有効な数値の範囲外です。整数3桁、小数点以下2桁以内の範囲で入力してください。"
                                             },
                                             {
                                                 "field": "weight",
-                                                "message": "有効な数値の範囲外です。整数3桁、小数点以下2桁以内の範囲で入力して下さい。"
+                                                "message": "正の数値で入力してください。"
                                             }
                                         ]
                                     }
