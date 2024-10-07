@@ -133,7 +133,7 @@ class PetRequestTest {
     }
 
     @Nested
-    class WeightTests {
+    class WeightFieldTests {
 
         @Test
         void 体重がNullの場合バリデーションエラーが発生すること() throws Exception {
