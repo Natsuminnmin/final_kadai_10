@@ -29,7 +29,7 @@ class PetRequestTest {
     //初めに値を設定しておく
     @BeforeEach
     public void before() {
-        petRequest.setAnimalSpecies("aaaaaaaaaaaaaaaaaaaa");
+        petRequest.setAnimalSpecies("dog");
         petRequest.setName("aaaaaaaaaaaaaaaaaaaa");
         petRequest.setBirthday(LocalDate.of(2021, 8, 31));
         petRequest.setWeight(new BigDecimal("3.45"));
@@ -51,7 +51,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError animalSpeciesError = bindingResult.getFieldError("animalSpecies");
-            assertThat(animalSpeciesError.getDefaultMessage()).isEqualTo("動物種を入力してください。");
+            assertThat(animalSpeciesError.getDefaultMessage()).isEqualTo("「dog」または「cat」で入力してください。");
         }
 
         @Test
@@ -61,17 +61,17 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError animalSpeciesError = bindingResult.getFieldError("animalSpecies");
-            assertThat(animalSpeciesError.getDefaultMessage()).isEqualTo("動物種を入力してください。");
+            assertThat(animalSpeciesError.getDefaultMessage()).isEqualTo("「dog」または「cat」で入力してください。");
         }
 
         @Test
-        void 動物種が20字以上の場合バリデーションエラーが発生すること() throws Exception {
-            petRequest.setAnimalSpecies("aaaaaaaaaaaaaaaaaaaaa");
+        void 動物種が既定のもの以外が入力された場合バリデーションエラーが発生すること() throws Exception {
+            petRequest.setAnimalSpecies("犬");
             validator.validate(petRequest, bindingResult);
 
             assertThat(bindingResult.hasErrors());
             FieldError animalSpeciesError = bindingResult.getFieldError("animalSpecies");
-            assertThat(animalSpeciesError.getDefaultMessage()).isEqualTo("20文字以内で記入してください。");
+            assertThat(animalSpeciesError.getDefaultMessage()).isEqualTo("「dog」または「cat」で入力してください。");
         }
     }
 

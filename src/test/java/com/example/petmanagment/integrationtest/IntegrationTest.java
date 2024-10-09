@@ -102,7 +102,7 @@ class IntegrationTest {
                                         "errors": [
                                             {
                                                 "field": "animalSpecies",
-                                                "message": "動物種を入力してください。"
+                                                "message": "「dog」または「cat」で入力してください。"
                                             }
                                         ]
                                     }
@@ -132,7 +132,7 @@ class IntegrationTest {
                                          },
                                          {
                                              "field": "animalSpecies",
-                                             "message": "動物種を入力してください。"
+                                             "message": "「dog」または「cat」で入力してください。"
                                          },
                                          {
                                              "field": "name",
@@ -147,7 +147,7 @@ class IntegrationTest {
         @Test
         @DataSet(value = "datasets/pets.yml")
         void 不正なフォーマットで入力されている場合は新規会員登録出来ないこと() throws Exception {
-            PetRequest petRequest = new PetRequest("aaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaa", LocalDate.of(2025, 10, 10), new BigDecimal("-1140.568"));
+            PetRequest petRequest = new PetRequest("犬", "aaaaaaaaaaaaaaaaaaaaa", LocalDate.of(2025, 10, 10), new BigDecimal("-1140.568"));
             String petRequestJson = objectMapper.writeValueAsString(petRequest);
             mockMvc.perform(post("/pets").contentType(MediaType.APPLICATION_JSON).content(petRequestJson))
                     .andExpect(status().isBadRequest())
@@ -170,7 +170,7 @@ class IntegrationTest {
                                          },
                                          {
                                              "field": "animalSpecies",
-                                             "message": "20文字以内で記入してください。"
+                                             "message": "「dog」または「cat」で入力してください。"
                                          },
                                          {
                                              "field": "name",

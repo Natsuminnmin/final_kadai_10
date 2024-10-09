@@ -15,8 +15,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class PetRequest {
 
-    @NotBlank(message = "動物種を入力してください。")
-    @Size(max = 20, message = "20文字以内で記入してください。")
+    @NotBlank(message = "「dog」または「cat」で入力してください。")
+    @Pattern(regexp = "^(dog|cat)$", message = "「dog」または「cat」で入力してください。")
     private String animalSpecies;
 
     @NotBlank(message = "名前を入力してください。")
