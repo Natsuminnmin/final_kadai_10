@@ -5,11 +5,13 @@ package com.example.petmanagment.controller;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class PetRequest {
 
@@ -21,13 +23,13 @@ public class PetRequest {
     @Size(max = 20, message = "20文字以内で記入してください。")
     private String name;
 
-    @NotNull(message = "誕生日を入力していださい。")
+    @NotNull(message = "誕生日を入力してください。")
     @PastOrPresent(message = "有効な日付の範囲外です、誕生日を入力してください。")
     private LocalDate birthday;
 
-    @NotNull(message = "体重を入力していださい。")
-    @Positive(message = "正の数値で入力してださい。")
-    @Digits(integer = 3, fraction = 2, message = "有効な数値の範囲外です。整数3桁、小数点以下2桁以内の範囲で入力して下さい。")
+    @NotNull(message = "体重を入力してください。")
+    @Positive(message = "正の数値で入力してください。")
+    @Digits(integer = 3, fraction = 2, message = "有効な数値の範囲外です。整数3桁、小数点以下2桁以内の範囲で入力してください。")
     private BigDecimal weight;
 
     public PetRequest(String animalSpecies, String name, LocalDate birthday, BigDecimal weight) {
