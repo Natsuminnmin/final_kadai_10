@@ -10,26 +10,28 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import static com.example.petmanagment.controller.exception.ValidationMessage.*;
+
 @Getter
 @Setter
 @NoArgsConstructor
 public class PetRequest {
 
-    @NotBlank(message = "「dog」または「cat」で入力してください。")
-    @Pattern(regexp = "^(dog|cat)$", message = "「dog」または「cat」で入力してください。")
+    @NotBlank(message = animalSpeciesErrorMessage)
+    @Pattern(regexp = "^(dog|cat)$", message = animalSpeciesErrorMessage)
     private String animalSpecies;
 
-    @NotBlank(message = "名前を入力してください。")
-    @Size(max = 20, message = "20文字以内で記入してください。")
+    @NotBlank(message = nameNonBlankMessage)
+    @Size(max = 20, message = nameErrorMessage)
     private String name;
 
-    @NotNull(message = "誕生日を入力してください。")
-    @PastOrPresent(message = "有効な日付の範囲外です、誕生日を入力してください。")
+    @NotNull(message = birthdayNonBlankMessage)
+    @PastOrPresent(message = birthdayErrorMessage)
     private LocalDate birthday;
 
-    @NotNull(message = "体重を入力してください。")
-    @Positive(message = "正の数値で入力してください。")
-    @Digits(integer = 3, fraction = 2, message = "有効な数値の範囲外です。整数3桁、小数点以下2桁以内の範囲で入力してください。")
+    @NotNull(message = weightNonBlank)
+    @Positive(message = weightPositiveMessage)
+    @Digits(integer = 3, fraction = 2, message = weightErrorMessage)
     private BigDecimal weight;
 
     public PetRequest(String animalSpecies, String name, LocalDate birthday, BigDecimal weight) {

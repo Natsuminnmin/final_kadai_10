@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+import static com.example.petmanagment.controller.exception.ValidationMessage.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -51,7 +52,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError animalSpeciesError = bindingResult.getFieldError("animalSpecies");
-            assertThat(animalSpeciesError.getDefaultMessage()).isEqualTo("「dog」または「cat」で入力してください。");
+            assertThat(animalSpeciesError.getDefaultMessage()).isEqualTo(animalSpeciesErrorMessage);
         }
 
         @Test
@@ -61,7 +62,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError animalSpeciesError = bindingResult.getFieldError("animalSpecies");
-            assertThat(animalSpeciesError.getDefaultMessage()).isEqualTo("「dog」または「cat」で入力してください。");
+            assertThat(animalSpeciesError.getDefaultMessage()).isEqualTo(animalSpeciesErrorMessage);
         }
 
         @Test
@@ -71,7 +72,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError animalSpeciesError = bindingResult.getFieldError("animalSpecies");
-            assertThat(animalSpeciesError.getDefaultMessage()).isEqualTo("「dog」または「cat」で入力してください。");
+            assertThat(animalSpeciesError.getDefaultMessage()).isEqualTo(animalSpeciesErrorMessage);
         }
     }
 
@@ -84,7 +85,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError nameError = bindingResult.getFieldError("name");
-            assertThat(nameError.getDefaultMessage()).isEqualTo("名前を入力してください。");
+            assertThat(nameError.getDefaultMessage()).isEqualTo(nameNonBlankMessage);
         }
 
         @Test
@@ -94,7 +95,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError nameError = bindingResult.getFieldError("name");
-            assertThat(nameError.getDefaultMessage()).isEqualTo("名前を入力してください。");
+            assertThat(nameError.getDefaultMessage()).isEqualTo(nameNonBlankMessage);
         }
 
         @Test
@@ -104,7 +105,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError nameError = bindingResult.getFieldError("name");
-            assertThat(nameError.getDefaultMessage()).isEqualTo("20文字以内で記入してください。");
+            assertThat(nameError.getDefaultMessage()).isEqualTo(nameErrorMessage);
         }
     }
 
@@ -118,7 +119,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError birthdayError = bindingResult.getFieldError("birthday");
-            assertThat(birthdayError.getDefaultMessage()).isEqualTo("誕生日を入力してください。");
+            assertThat(birthdayError.getDefaultMessage()).isEqualTo(birthdayNonBlankMessage);
         }
 
         @Test
@@ -128,7 +129,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError birthdayError = bindingResult.getFieldError("birthday");
-            assertThat(birthdayError.getDefaultMessage()).isEqualTo("有効な日付の範囲外です、誕生日を入力してください。");
+            assertThat(birthdayError.getDefaultMessage()).isEqualTo(birthdayErrorMessage);
         }
     }
 
@@ -142,7 +143,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError weightError = bindingResult.getFieldError("weight");
-            assertThat(weightError.getDefaultMessage()).isEqualTo("体重を入力してください。");
+            assertThat(weightError.getDefaultMessage()).isEqualTo(weightNonBlank);
         }
 
         @Test
@@ -152,7 +153,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError weightError = bindingResult.getFieldError("weight");
-            assertThat(weightError.getDefaultMessage()).isEqualTo("正の数値で入力してください。");
+            assertThat(weightError.getDefaultMessage()).isEqualTo(weightPositiveMessage);
         }
 
         @Test
@@ -162,7 +163,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError weightError = bindingResult.getFieldError("weight");
-            assertThat(weightError.getDefaultMessage()).isEqualTo("有効な数値の範囲外です。整数3桁、小数点以下2桁以内の範囲で入力してください。");
+            assertThat(weightError.getDefaultMessage()).isEqualTo(weightErrorMessage);
         }
 
         @Test
@@ -173,8 +174,8 @@ class PetRequestTest {
             assertThat(bindingResult.hasErrors());
             List<FieldError> weightErrors = bindingResult.getFieldErrors("weight");
             assertEquals(2, weightErrors.size());
-            assertThat(weightErrors.get(0).getDefaultMessage()).isEqualTo("正の数値で入力してください。");
-            assertThat(weightErrors.get(1).getDefaultMessage()).isEqualTo("有効な数値の範囲外です。整数3桁、小数点以下2桁以内の範囲で入力してください。");
+            assertThat(weightErrors.get(0).getDefaultMessage()).isEqualTo(weightPositiveMessage);
+            assertThat(weightErrors.get(1).getDefaultMessage()).isEqualTo(weightErrorMessage);
         }
     }
 }
