@@ -14,7 +14,14 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-import static com.example.petmanagment.controller.exception.ValidationMessage.*;
+import static com.example.petmanagment.constants.ValidationMessage.ANIMAL_SPECIES_ERROR_MESSAGE;
+import static com.example.petmanagment.constants.ValidationMessage.BIRTHDAY_ERROR_MESSAGE;
+import static com.example.petmanagment.constants.ValidationMessage.BIRTHDAY_NOT_BLANK_MESSAGE;
+import static com.example.petmanagment.constants.ValidationMessage.NAME_ERROR_MESSAGE;
+import static com.example.petmanagment.constants.ValidationMessage.NAME_NOT_BLANK_MESSAGE;
+import static com.example.petmanagment.constants.ValidationMessage.WEIGHT_ERROR_MESSAGE;
+import static com.example.petmanagment.constants.ValidationMessage.WEIGHT_NOT_BLANK_MESSAGE;
+import static com.example.petmanagment.constants.ValidationMessage.WEIGHT_POSITIVE_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -52,7 +59,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError animalSpeciesError = bindingResult.getFieldError("animalSpecies");
-            assertThat(animalSpeciesError.getDefaultMessage()).isEqualTo(animalSpeciesErrorMessage);
+            assertThat(animalSpeciesError.getDefaultMessage()).isEqualTo(ANIMAL_SPECIES_ERROR_MESSAGE);
         }
 
         @Test
@@ -62,7 +69,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError animalSpeciesError = bindingResult.getFieldError("animalSpecies");
-            assertThat(animalSpeciesError.getDefaultMessage()).isEqualTo(animalSpeciesErrorMessage);
+            assertThat(animalSpeciesError.getDefaultMessage()).isEqualTo(ANIMAL_SPECIES_ERROR_MESSAGE);
         }
 
         @Test
@@ -72,7 +79,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError animalSpeciesError = bindingResult.getFieldError("animalSpecies");
-            assertThat(animalSpeciesError.getDefaultMessage()).isEqualTo(animalSpeciesErrorMessage);
+            assertThat(animalSpeciesError.getDefaultMessage()).isEqualTo(ANIMAL_SPECIES_ERROR_MESSAGE);
         }
     }
 
@@ -85,7 +92,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError nameError = bindingResult.getFieldError("name");
-            assertThat(nameError.getDefaultMessage()).isEqualTo(nameNonBlankMessage);
+            assertThat(nameError.getDefaultMessage()).isEqualTo(NAME_NOT_BLANK_MESSAGE);
         }
 
         @Test
@@ -95,7 +102,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError nameError = bindingResult.getFieldError("name");
-            assertThat(nameError.getDefaultMessage()).isEqualTo(nameNonBlankMessage);
+            assertThat(nameError.getDefaultMessage()).isEqualTo(NAME_NOT_BLANK_MESSAGE);
         }
 
         @Test
@@ -105,7 +112,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError nameError = bindingResult.getFieldError("name");
-            assertThat(nameError.getDefaultMessage()).isEqualTo(nameErrorMessage);
+            assertThat(nameError.getDefaultMessage()).isEqualTo(NAME_ERROR_MESSAGE);
         }
     }
 
@@ -119,7 +126,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError birthdayError = bindingResult.getFieldError("birthday");
-            assertThat(birthdayError.getDefaultMessage()).isEqualTo(birthdayNonBlankMessage);
+            assertThat(birthdayError.getDefaultMessage()).isEqualTo(BIRTHDAY_NOT_BLANK_MESSAGE);
         }
 
         @Test
@@ -129,7 +136,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError birthdayError = bindingResult.getFieldError("birthday");
-            assertThat(birthdayError.getDefaultMessage()).isEqualTo(birthdayErrorMessage);
+            assertThat(birthdayError.getDefaultMessage()).isEqualTo(BIRTHDAY_ERROR_MESSAGE);
         }
     }
 
@@ -143,7 +150,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError weightError = bindingResult.getFieldError("weight");
-            assertThat(weightError.getDefaultMessage()).isEqualTo(weightNonBlank);
+            assertThat(weightError.getDefaultMessage()).isEqualTo(WEIGHT_NOT_BLANK_MESSAGE);
         }
 
         @Test
@@ -153,7 +160,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError weightError = bindingResult.getFieldError("weight");
-            assertThat(weightError.getDefaultMessage()).isEqualTo(weightPositiveMessage);
+            assertThat(weightError.getDefaultMessage()).isEqualTo(WEIGHT_POSITIVE_MESSAGE);
         }
 
         @Test
@@ -163,7 +170,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError weightError = bindingResult.getFieldError("weight");
-            assertThat(weightError.getDefaultMessage()).isEqualTo(weightErrorMessage);
+            assertThat(weightError.getDefaultMessage()).isEqualTo(WEIGHT_ERROR_MESSAGE);
         }
 
         @Test
@@ -174,8 +181,8 @@ class PetRequestTest {
             assertThat(bindingResult.hasErrors());
             List<FieldError> weightErrors = bindingResult.getFieldErrors("weight");
             assertEquals(2, weightErrors.size());
-            assertThat(weightErrors.get(0).getDefaultMessage()).isEqualTo(weightPositiveMessage);
-            assertThat(weightErrors.get(1).getDefaultMessage()).isEqualTo(weightErrorMessage);
+            assertThat(weightErrors.get(0).getDefaultMessage()).isEqualTo(WEIGHT_POSITIVE_MESSAGE);
+            assertThat(weightErrors.get(1).getDefaultMessage()).isEqualTo(WEIGHT_ERROR_MESSAGE);
         }
     }
 }
