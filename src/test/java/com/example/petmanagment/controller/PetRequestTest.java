@@ -14,6 +14,14 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+import static com.example.petmanagment.constants.ValidationMessage.ANIMAL_SPECIES_ERROR_MESSAGE;
+import static com.example.petmanagment.constants.ValidationMessage.BIRTHDAY_ERROR_MESSAGE;
+import static com.example.petmanagment.constants.ValidationMessage.BIRTHDAY_NOT_BLANK_MESSAGE;
+import static com.example.petmanagment.constants.ValidationMessage.NAME_ERROR_MESSAGE;
+import static com.example.petmanagment.constants.ValidationMessage.NAME_NOT_BLANK_MESSAGE;
+import static com.example.petmanagment.constants.ValidationMessage.WEIGHT_ERROR_MESSAGE;
+import static com.example.petmanagment.constants.ValidationMessage.WEIGHT_NOT_BLANK_MESSAGE;
+import static com.example.petmanagment.constants.ValidationMessage.WEIGHT_POSITIVE_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -29,7 +37,7 @@ class PetRequestTest {
     //初めに値を設定しておく
     @BeforeEach
     public void before() {
-        petRequest.setAnimalSpecies("aaaaaaaaaaaaaaaaaaaa");
+        petRequest.setAnimalSpecies("dog");
         petRequest.setName("aaaaaaaaaaaaaaaaaaaa");
         petRequest.setBirthday(LocalDate.of(2021, 8, 31));
         petRequest.setWeight(new BigDecimal("3.45"));
@@ -51,7 +59,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError animalSpeciesError = bindingResult.getFieldError("animalSpecies");
-            assertThat(animalSpeciesError.getDefaultMessage()).isEqualTo("動物種を入力してください。");
+            assertThat(animalSpeciesError.getDefaultMessage()).isEqualTo(ANIMAL_SPECIES_ERROR_MESSAGE);
         }
 
         @Test
@@ -61,17 +69,17 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError animalSpeciesError = bindingResult.getFieldError("animalSpecies");
-            assertThat(animalSpeciesError.getDefaultMessage()).isEqualTo("動物種を入力してください。");
+            assertThat(animalSpeciesError.getDefaultMessage()).isEqualTo(ANIMAL_SPECIES_ERROR_MESSAGE);
         }
 
         @Test
-        void 動物種が20字以上の場合バリデーションエラーが発生すること() throws Exception {
-            petRequest.setAnimalSpecies("aaaaaaaaaaaaaaaaaaaaa");
+        void 動物種が既定のもの以外が入力された場合バリデーションエラーが発生すること() throws Exception {
+            petRequest.setAnimalSpecies("犬");
             validator.validate(petRequest, bindingResult);
 
             assertThat(bindingResult.hasErrors());
             FieldError animalSpeciesError = bindingResult.getFieldError("animalSpecies");
-            assertThat(animalSpeciesError.getDefaultMessage()).isEqualTo("20文字以内で記入してください。");
+            assertThat(animalSpeciesError.getDefaultMessage()).isEqualTo(ANIMAL_SPECIES_ERROR_MESSAGE);
         }
     }
 
@@ -84,7 +92,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError nameError = bindingResult.getFieldError("name");
-            assertThat(nameError.getDefaultMessage()).isEqualTo("名前を入力してください。");
+            assertThat(nameError.getDefaultMessage()).isEqualTo(NAME_NOT_BLANK_MESSAGE);
         }
 
         @Test
@@ -94,7 +102,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError nameError = bindingResult.getFieldError("name");
-            assertThat(nameError.getDefaultMessage()).isEqualTo("名前を入力してください。");
+            assertThat(nameError.getDefaultMessage()).isEqualTo(NAME_NOT_BLANK_MESSAGE);
         }
 
         @Test
@@ -104,7 +112,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError nameError = bindingResult.getFieldError("name");
-            assertThat(nameError.getDefaultMessage()).isEqualTo("20文字以内で記入してください。");
+            assertThat(nameError.getDefaultMessage()).isEqualTo(NAME_ERROR_MESSAGE);
         }
     }
 
@@ -118,7 +126,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError birthdayError = bindingResult.getFieldError("birthday");
-            assertThat(birthdayError.getDefaultMessage()).isEqualTo("誕生日を入力してください。");
+            assertThat(birthdayError.getDefaultMessage()).isEqualTo(BIRTHDAY_NOT_BLANK_MESSAGE);
         }
 
         @Test
@@ -128,7 +136,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError birthdayError = bindingResult.getFieldError("birthday");
-            assertThat(birthdayError.getDefaultMessage()).isEqualTo("有効な日付の範囲外です、誕生日を入力してください。");
+            assertThat(birthdayError.getDefaultMessage()).isEqualTo(BIRTHDAY_ERROR_MESSAGE);
         }
     }
 
@@ -142,7 +150,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError weightError = bindingResult.getFieldError("weight");
-            assertThat(weightError.getDefaultMessage()).isEqualTo("体重を入力してください。");
+            assertThat(weightError.getDefaultMessage()).isEqualTo(WEIGHT_NOT_BLANK_MESSAGE);
         }
 
         @Test
@@ -152,7 +160,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError weightError = bindingResult.getFieldError("weight");
-            assertThat(weightError.getDefaultMessage()).isEqualTo("正の数値で入力してください。");
+            assertThat(weightError.getDefaultMessage()).isEqualTo(WEIGHT_POSITIVE_MESSAGE);
         }
 
         @Test
@@ -162,7 +170,7 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             FieldError weightError = bindingResult.getFieldError("weight");
-            assertThat(weightError.getDefaultMessage()).isEqualTo("有効な数値の範囲外です。整数3桁、小数点以下2桁以内の範囲で入力してください。");
+            assertThat(weightError.getDefaultMessage()).isEqualTo(WEIGHT_ERROR_MESSAGE);
         }
 
         @Test
@@ -173,8 +181,8 @@ class PetRequestTest {
             assertThat(bindingResult.hasErrors());
             List<FieldError> weightErrors = bindingResult.getFieldErrors("weight");
             assertEquals(2, weightErrors.size());
-            assertThat(weightErrors.get(0).getDefaultMessage()).isEqualTo("正の数値で入力してください。");
-            assertThat(weightErrors.get(1).getDefaultMessage()).isEqualTo("有効な数値の範囲外です。整数3桁、小数点以下2桁以内の範囲で入力してください。");
+            assertThat(weightErrors.get(0).getDefaultMessage()).isEqualTo(WEIGHT_POSITIVE_MESSAGE);
+            assertThat(weightErrors.get(1).getDefaultMessage()).isEqualTo(WEIGHT_ERROR_MESSAGE);
         }
     }
 }

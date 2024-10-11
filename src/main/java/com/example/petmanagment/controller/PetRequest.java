@@ -2,7 +2,13 @@ package com.example.petmanagment.controller;
 
 //登録時に使用するリクエストパラメータ
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,26 +16,35 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import static com.example.petmanagment.constants.ValidationMessage.ANIMAL_SPECIES_ERROR_MESSAGE;
+import static com.example.petmanagment.constants.ValidationMessage.BIRTHDAY_ERROR_MESSAGE;
+import static com.example.petmanagment.constants.ValidationMessage.BIRTHDAY_NOT_BLANK_MESSAGE;
+import static com.example.petmanagment.constants.ValidationMessage.NAME_ERROR_MESSAGE;
+import static com.example.petmanagment.constants.ValidationMessage.NAME_NOT_BLANK_MESSAGE;
+import static com.example.petmanagment.constants.ValidationMessage.WEIGHT_ERROR_MESSAGE;
+import static com.example.petmanagment.constants.ValidationMessage.WEIGHT_NOT_BLANK_MESSAGE;
+import static com.example.petmanagment.constants.ValidationMessage.WEIGHT_POSITIVE_MESSAGE;
+
 @Getter
 @Setter
 @NoArgsConstructor
 public class PetRequest {
 
-    @NotBlank(message = "動物種を入力してください。")
-    @Size(max = 20, message = "20文字以内で記入してください。")
+    @NotBlank(message = ANIMAL_SPECIES_ERROR_MESSAGE)
+    @Pattern(regexp = "^(dog|cat)$", message = ANIMAL_SPECIES_ERROR_MESSAGE)
     private String animalSpecies;
 
-    @NotBlank(message = "名前を入力してください。")
-    @Size(max = 20, message = "20文字以内で記入してください。")
+    @NotBlank(message = NAME_NOT_BLANK_MESSAGE)
+    @Size(max = 20, message = NAME_ERROR_MESSAGE)
     private String name;
 
-    @NotNull(message = "誕生日を入力してください。")
-    @PastOrPresent(message = "有効な日付の範囲外です、誕生日を入力してください。")
+    @NotNull(message = BIRTHDAY_NOT_BLANK_MESSAGE)
+    @PastOrPresent(message = BIRTHDAY_ERROR_MESSAGE)
     private LocalDate birthday;
 
-    @NotNull(message = "体重を入力してください。")
-    @Positive(message = "正の数値で入力してください。")
-    @Digits(integer = 3, fraction = 2, message = "有効な数値の範囲外です。整数3桁、小数点以下2桁以内の範囲で入力してください。")
+    @NotNull(message = WEIGHT_NOT_BLANK_MESSAGE)
+    @Positive(message = WEIGHT_POSITIVE_MESSAGE)
+    @Digits(integer = 3, fraction = 2, message = WEIGHT_ERROR_MESSAGE)
     private BigDecimal weight;
 
     public PetRequest(String animalSpecies, String name, LocalDate birthday, BigDecimal weight) {

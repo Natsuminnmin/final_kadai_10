@@ -21,8 +21,21 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static com.example.petmanagment.constants.ValidationMessage.ANIMAL_SPECIES_ERROR_MESSAGE;
+import static com.example.petmanagment.constants.ValidationMessage.BIRTHDAY_ERROR_MESSAGE;
+import static com.example.petmanagment.constants.ValidationMessage.BIRTHDAY_NOT_BLANK_MESSAGE;
+import static com.example.petmanagment.constants.ValidationMessage.NAME_ERROR_MESSAGE;
+import static com.example.petmanagment.constants.ValidationMessage.NAME_NOT_BLANK_MESSAGE;
+import static com.example.petmanagment.constants.ValidationMessage.WEIGHT_ERROR_MESSAGE;
+import static com.example.petmanagment.constants.ValidationMessage.WEIGHT_NOT_BLANK_MESSAGE;
+import static com.example.petmanagment.constants.ValidationMessage.WEIGHT_POSITIVE_MESSAGE;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @DBRider
@@ -92,22 +105,23 @@ class IntegrationTest {
         void 項目の内の一つでも抜けがある場合は新規登録できないこと() throws Exception {
             PetRequest petRequest = new PetRequest(null, "ミケ", LocalDate.of(2019, 9, 9), new BigDecimal("6.94"));
             String petRequestJson = objectMapper.writeValueAsString(petRequest);
+            String animalSpeciesErrorMessage = ANIMAL_SPECIES_ERROR_MESSAGE;
+            String errorResponse = String.format("""
+                    {
+                        "status": "BAD_REQUEST",
+                        "message": "validation error",
+                        "errors": [
+                            {
+                                "field": "animalSpecies",
+                                "message": "%s"
+                            }
+                        ]
+                    }
+                    """, ANIMAL_SPECIES_ERROR_MESSAGE
+            );
             mockMvc.perform(post("/pets").contentType(MediaType.APPLICATION_JSON).content(petRequestJson))
                     .andExpect(status().isBadRequest())
-                    .andExpect(content().json(
-                            """
-                                    {
-                                        "status": "BAD_REQUEST",
-                                        "message": "validation error",
-                                        "errors": [
-                                            {
-                                                "field": "animalSpecies",
-                                                "message": "動物種を入力してください。"
-                                            }
-                                        ]
-                                    }
-                                    """
-                    ));
+                    .andExpect(content().json(errorResponse));
         }
 
         @Test
@@ -115,72 +129,82 @@ class IntegrationTest {
         void 全項目が正しく入力されていない場合は新規登録できないこと() throws Exception {
             PetRequest petRequest = new PetRequest(null, null, null, null);
             String petRequestJson = objectMapper.writeValueAsString(petRequest);
+            String animalSpeciesErrorMessage = ANIMAL_SPECIES_ERROR_MESSAGE;
+            String nameNotBlankMessage = NAME_NOT_BLANK_MESSAGE;
+            String birthdayNotBlankMessage = BIRTHDAY_NOT_BLANK_MESSAGE;
+            String weightNotBlankMessage = WEIGHT_NOT_BLANK_MESSAGE;
+            String errorResponse = String.format("""
+                         {
+                             "status": "BAD_REQUEST",
+                             "message": "validation error",
+                             "errors": [
+                                 {
+                                     "field": "animalSpecies",
+                                     "message": "%s"
+                                 },
+                                 {
+                                     "field": "name",
+                                     "message": "%s"
+                                 },
+                                 {
+                                     "field": "birthday",
+                                     "message": "%s"
+                                 },
+                                 {
+                                     "field": "weight",
+                                     "message": "%s"
+                                 }
+                             ]
+                         }                         
+                    """, ANIMAL_SPECIES_ERROR_MESSAGE, NAME_NOT_BLANK_MESSAGE, BIRTHDAY_NOT_BLANK_MESSAGE, WEIGHT_NOT_BLANK_MESSAGE);
             mockMvc.perform(post("/pets").contentType(MediaType.APPLICATION_JSON).content(petRequestJson))
                     .andExpect(status().isBadRequest())
-                    .andExpect(content().json("""
-                                 {
-                                     "status": "BAD_REQUEST",
-                                     "message": "validation error",
-                                     "errors": [
-                                         {
-                                             "field": "birthday",
-                                             "message": "誕生日を入力してください。"
-                                         },
-                                         {
-                                             "field": "weight",
-                                             "message": "体重を入力してください。"
-                                         },
-                                         {
-                                             "field": "animalSpecies",
-                                             "message": "動物種を入力してください。"
-                                         },
-                                         {
-                                             "field": "name",
-                                             "message": "名前を入力してください。"
-                                         }
-                                     ]
-                                 }                         
-                            """
-                    ));
+                    .andExpect(content().json(errorResponse));
         }
 
         @Test
         @DataSet(value = "datasets/pets.yml")
         void 不正なフォーマットで入力されている場合は新規会員登録出来ないこと() throws Exception {
-            PetRequest petRequest = new PetRequest("aaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaa", LocalDate.of(2025, 10, 10), new BigDecimal("-1140.568"));
+            PetRequest petRequest = new PetRequest("犬", "aaaaaaaaaaaaaaaaaaaaa", LocalDate.of(2025, 10, 10), new BigDecimal("-1140.568"));
             String petRequestJson = objectMapper.writeValueAsString(petRequest);
+            String animalErrorMessage = ANIMAL_SPECIES_ERROR_MESSAGE;
+            String nameErrorMessage = NAME_ERROR_MESSAGE;
+            String birthdayErrorMessage = BIRTHDAY_ERROR_MESSAGE;
+            String weightErrorMessage = WEIGHT_ERROR_MESSAGE;
+            String weightPositiveMessage = WEIGHT_POSITIVE_MESSAGE;
+            String errorResponse = String.format("""
+                            {
+                            "status": "BAD_REQUEST",
+                            "message": "validation error",
+                             "errors": [
+                                 {
+                                     "field": "animalSpecies",
+                                     "message": %s"
+                                 },
+                                 {
+                                     "field": "name",
+                                     "message": "%s"
+                                 },
+                                 {
+                                     "field": "birthday",
+                                     "message": "%s"
+                                 },
+                                 {
+                                     "field": "weight",
+                                     "message": "%s"
+                                 },
+                                 {
+                                     "field": "weight",
+                                     "message": "%s"
+                                 }
+                         ]   
+                         
+                         }                  
+                                                                    
+                    """, ANIMAL_SPECIES_ERROR_MESSAGE, NAME_ERROR_MESSAGE, BIRTHDAY_ERROR_MESSAGE, WEIGHT_POSITIVE_MESSAGE, WEIGHT_ERROR_MESSAGE);
             mockMvc.perform(post("/pets").contentType(MediaType.APPLICATION_JSON).content(petRequestJson))
                     .andExpect(status().isBadRequest())
-                    .andExpect(content().json("""
-                                    {
-                                    "status": "BAD_REQUEST",
-                                    "message": "validation error",
-                                     "errors": [
-                                         {
-                                             "field": "birthday",
-                                             "message": "有効な日付の範囲外です、誕生日を入力してください。"
-                                         },
-                                         {
-                                             "field": "weight",
-                                             "message": "正の数値で入力してください。"
-                                         },
-                                         {
-                                             "field": "weight",
-                                             "message": "有効な数値の範囲外です。整数3桁、小数点以下2桁以内の範囲で入力してください。"
-                                         },
-                                         {
-                                             "field": "animalSpecies",
-                                             "message": "20文字以内で記入してください。"
-                                         },
-                                         {
-                                             "field": "name",
-                                             "message": "20文字以内で記入してください。"
-                                         }
-                                 ]   
-                                 
-                                 }                  
-                                                                            
-                            """));
+                    .andExpect(content().json(errorResponse));
         }
     }
 
@@ -214,22 +238,22 @@ class IntegrationTest {
         void 体重の入力が正しく無い場合は更新することが出来ないこと() throws Exception {
             PetUpdateWeightRequest petUpdateWeightRequest = new PetUpdateWeightRequest(null);
             String petUpdateWeightRequestJson = objectMapper.writeValueAsString(petUpdateWeightRequest);
+            String weightNotBlankMessage = WEIGHT_NOT_BLANK_MESSAGE;
+            String errorResponse = String.format("""
+                    {
+                        "status": "BAD_REQUEST",
+                        "message": "validation error",
+                        "errors": [
+                            {
+                                "field": "weight",
+                                "message": "%s"
+                            }
+                        ]
+                    }
+                    """, WEIGHT_NOT_BLANK_MESSAGE);
             mockMvc.perform(patch("/pets/{id}", 1).contentType(MediaType.APPLICATION_JSON).content(petUpdateWeightRequestJson))
                     .andExpect(status().isBadRequest())
-                    .andExpect(content().json(
-                            """
-                                    {
-                                        "status": "BAD_REQUEST",
-                                        "message": "validation error",
-                                        "errors": [
-                                            {
-                                                "field": "weight",
-                                                "message": "体重を入力してください。"
-                                            }
-                                        ]
-                                    }
-                                    """
-                    ));
+                    .andExpect(content().json(errorResponse));
         }
 
         @Test
@@ -237,25 +261,27 @@ class IntegrationTest {
         void 不正なフォーマットで体重が入力されている場合は更新することが出来ないこと() throws Exception {
             PetUpdateWeightRequest petUpdateWeightRequest = new PetUpdateWeightRequest(new BigDecimal("-1234.567"));
             String petUpdateWeightRequestJson = objectMapper.writeValueAsString(petUpdateWeightRequest);
+            String weightPositiveMessage = WEIGHT_POSITIVE_MESSAGE;
+            String weightErrorMessage = WEIGHT_ERROR_MESSAGE;
+            String errorResponse = String.format("""
+                    {
+                        "status": "BAD_REQUEST",
+                        "message": "validation error",
+                        "errors": [
+                            {
+                                "field": "weight",
+                                "message": "%s"
+                            },
+                            {
+                                "field": "weight",
+                                "message": "%s"
+                            }
+                        ]
+                    }
+                     """, WEIGHT_POSITIVE_MESSAGE, WEIGHT_ERROR_MESSAGE);
             mockMvc.perform(patch("/pets/{id}", 1).contentType(MediaType.APPLICATION_JSON).content(petUpdateWeightRequestJson))
                     .andExpect(status().isBadRequest())
-                    .andExpect(content().json(
-                            """
-                                    {
-                                        "status": "BAD_REQUEST",
-                                        "message": "validation error",
-                                        "errors": [
-                                            {
-                                                "field": "weight",
-                                                "message": "有効な数値の範囲外です。整数3桁、小数点以下2桁以内の範囲で入力してください。"
-                                            },
-                                            {
-                                                "field": "weight",
-                                                "message": "正の数値で入力してください。"
-                                            }
-                                        ]
-                                    }
-                                     """));
+                    .andExpect(content().json(errorResponse));
         }
 
         @Test
