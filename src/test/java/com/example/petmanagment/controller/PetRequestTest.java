@@ -181,8 +181,8 @@ class PetRequestTest {
             assertThat(bindingResult.hasErrors());
             List<FieldError> weightErrors = bindingResult.getFieldErrors("weight");
             assertEquals(2, weightErrors.size());
-            assertThat(weightErrors.get(0).getDefaultMessage()).isEqualTo(WEIGHT_POSITIVE_MESSAGE);
-            assertThat(weightErrors.get(1).getDefaultMessage()).isEqualTo(WEIGHT_ERROR_MESSAGE);
+            assertThat(weightErrors.get(0).getDefaultMessage()).isEqualTo(WEIGHT_ERROR_MESSAGE);
+            assertThat(weightErrors.get(1).getDefaultMessage()).isEqualTo(WEIGHT_POSITIVE_MESSAGE);
         }
     }
 }
