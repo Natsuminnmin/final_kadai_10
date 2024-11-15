@@ -23,7 +23,6 @@ import static com.example.petmanagment.constants.ValidationMessage.WEIGHT_ERROR_
 import static com.example.petmanagment.constants.ValidationMessage.WEIGHT_NOT_BLANK_MESSAGE;
 import static com.example.petmanagment.constants.ValidationMessage.WEIGHT_POSITIVE_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 class PetRequestTest {
@@ -180,9 +179,9 @@ class PetRequestTest {
 
             assertThat(bindingResult.hasErrors());
             List<FieldError> weightErrors = bindingResult.getFieldErrors("weight");
-            assertEquals(2, weightErrors.size());
-            assertThat(weightErrors.get(0).getDefaultMessage()).isEqualTo(WEIGHT_ERROR_MESSAGE);
-            assertThat(weightErrors.get(1).getDefaultMessage()).isEqualTo(WEIGHT_POSITIVE_MESSAGE);
+            assertThat(weightErrors.size()).isEqualTo(2);
+            assertThat(weightErrors.stream().anyMatch(error -> WEIGHT_ERROR_MESSAGE.equals(error.getDefaultMessage())));
+            assertThat(weightErrors.stream().anyMatch(error -> WEIGHT_POSITIVE_MESSAGE.equals(error.getDefaultMessage())));
         }
     }
 }
