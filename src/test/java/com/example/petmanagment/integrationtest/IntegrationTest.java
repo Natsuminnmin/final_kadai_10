@@ -179,7 +179,7 @@ class IntegrationTest {
                              "errors": [
                                  {
                                      "field": "animalSpecies",
-                                     "message": %s"
+                                     "message": "%s"
                                  },
                                  {
                                      "field": "name",
